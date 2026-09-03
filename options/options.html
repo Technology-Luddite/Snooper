@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Snooper Control Panel</title>
+    <link rel="stylesheet" href="../styles/snooper.css">
+</head>
+
+<body>
+
+<div class="layout">
+
+    <div class="sidebar">
+        <h2>Snooper</h2>
+
+        <button data-tab="hub">Hub</button>
+        <button data-tab="dashboard">Dashboard</button>
+        <button data-tab="cookies">Cookies</button>
+        <button data-tab="storage">Storage</button>
+        <button data-tab="network">Network</button>
+        <button data-tab="identity">Identity</button>
+        <button data-tab="fingerprint">Fingerprint</button>
+        <button data-tab="logs">Logs</button>
+    </div>
+
+    <div class="content">
+        <div id="view">Loading...</div>
+    </div>
+
+</div>
+
+<script src="../core/snooper-core.js"></script>
+<script src="options.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+[
+  {
+    "id": "ip-geo",
+    "label": "IP-based geolocation (ip2location, MaxMind, etc.)",
+    "reason": "Derived from your network IP — not readable from JavaScript",
+    "status": "impossible",
+    "workaround": "Use a VPN or proxy. This is separate from the browser Geolocation API (spoofed via the Geolocation preset below)."
+  },
+  {
+    "id": "tls",
+    "label": "TLS / JA3 / HTTP2 fingerprint",
+    "reason": "Network stack — Chrome extensions cannot modify TLS handshakes",
+    "status": "impossible",
+    "workaround": "No in-extension fix. Use an external VPN/proxy or a hardened browser profile."
+  },
+  {
+    "id": "fonts",
+    "label": "Installed font list (layout-based probing)",
+    "reason": "document.fonts can be aligned to your platform preset; canvas width-measurement probes may still leak",
+    "status": "partial",
+    "toggle": "spoofFonts",
+    "workaround": "Enable Font enumeration. Ultimate Stealth turns this on."
+  },
+  {
+    "id": "webrtc-ip",
+    "label": "WebRTC local IP",
+    "reason": "STUN can expose local IPs unless UDP is blocked at the browser policy level",
+    "status": "mitigated",
+    "toggle": "blockWebRTC",
+    "workaround": "Enable Block WebRTC — uses chrome.privacy.network.webRTCIPHandlingPolicy."
+  },
+  {
+    "id": "physical-window",
+    "label": "Physical window size vs claimed screen",
+    "reason": "JS inner/outer/screen values are aligned to your Screen preset; real CSS layout still uses the actual viewport unless you resize the window",
+    "status": "partial",
+    "toggle": "spoofMatchMedia",
+    "preset": "screen",
+    "workaround": "Pick a Screen preset + keep matchMedia enabled. Resize browser window to match for best results."
+  },
+  {
+    "id": "workers",
+    "label": "Dedicated / Service Worker contexts",
+    "reason": "Same-origin dedicated workers receive a navigator bootstrap; module, cross-origin, and service workers may not",
+    "status": "partial",
+    "toggle": "spoofWorkers",
+    "workaround": "Enable Worker navigator bootstrap. Not 100% — known MV3 limitation."
+  },
+  {
+    "id": "gpu-timing",
+    "label": "True GPU / driver identity",
+    "reason": "WebGL vendor/renderer strings are spoofed; GPU timing side-channels are not",
+    "status": "partial",
+    "toggle": "spoofWebgl",
+    "preset": "webgl",
+    "workaround": "Enable WebGL spoofing + pick a WebGL GPU preset. Timing attacks may still fingerprint hardware."
+  }
+]

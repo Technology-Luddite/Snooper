@@ -1,0 +1,7 @@
+{
+  "extensionName": "Snooper",
+  "author": "Snooper Project",
+  "email": "",
+  "website": "",
+  "about": "Snooper is a persistent browser fingerprint spoofing toolkit for Chrome. It helps you control what websites see — user agent, screen, timezone, WebGL, geolocation, privacy signals, and more — with named profiles that survive browser restarts. Built as an unpacked MV3 extension for privacy-conscious browsing and anti-fingerprint testing."
+}

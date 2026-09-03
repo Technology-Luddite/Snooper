@@ -1,0 +1,10 @@
+[
+  { "label": "4g-excellent", "effectiveType": "4g", "downlink": 10, "rtt": 50 },
+  { "label": "4g-good", "effectiveType": "4g", "downlink": 5, "rtt": 100 },
+  { "label": "4g-fair", "effectiveType": "4g", "downlink": 2.5, "rtt": 150 },
+  { "label": "4g-mobile-fast", "effectiveType": "4g", "downlink": 15, "rtt": 80 },
+  { "label": "3g-slow", "effectiveType": "3g", "downlink": 1.5, "rtt": 300 },
+  { "label": "3g-moderate", "effectiveType": "3g", "downlink": 0.7, "rtt": 400 },
+  { "label": "2g-slow", "effectiveType": "2g", "downlink": 0.25, "rtt": 600 },
+  { "label": "slow-2g", "effectiveType": "slow-2g", "downlink": 0.05, "rtt": 2000 }
+]

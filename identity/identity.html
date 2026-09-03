@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Snooper Identity</title>
+    <link rel="stylesheet" href="../styles/snooper.css">
+</head>
+
+<body>
+
+<div class="wrap">
+
+    <h1>🧭 Identity Spoofing</h1>
+
+    <div class="card">
+        <h2>Language</h2>
+        <input id="language" placeholder="en-GB" />
+    </div>
+
+    <div class="card">
+        <h2>Timezone</h2>
+        <input id="timezone" placeholder="Europe/London" />
+    </div>
+
+    <div class="card">
+        <h2>User Agent</h2>
+        <textarea id="ua" placeholder="Custom User Agent"></textarea>
+    </div>
+
+    <button id="save">Save Identity Settings</button>
+
+    <div class="card">
+        <h2>Status</h2>
+        <div id="status">Not applied</div>
+    </div>
+
+</div>
+
+<script src="identity.js"></script>
+
+</body>
+</html>

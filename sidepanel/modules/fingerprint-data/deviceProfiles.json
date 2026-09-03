@@ -1,0 +1,45 @@
+[
+  {
+    "_deprecated": "Replaced by cpuCores.json, deviceMemoryGb.json, touchPoints.json, connectionProfiles.json",
+    "label": "High End Desktop",
+    "hardwareConcurrency": 16,
+    "deviceMemory": 32,
+    "maxTouchPoints": 0,
+    "connection": { "effectiveType": "4g", "downlink": 10, "rtt": 50 }
+  },
+  {
+    "label": "Mid Desktop",
+    "hardwareConcurrency": 8,
+    "deviceMemory": 16,
+    "maxTouchPoints": 0,
+    "connection": { "effectiveType": "4g", "downlink": 5, "rtt": 100 }
+  },
+  {
+    "label": "Low Desktop",
+    "hardwareConcurrency": 4,
+    "deviceMemory": 8,
+    "maxTouchPoints": 0,
+    "connection": { "effectiveType": "4g", "downlink": 2.5, "rtt": 150 }
+  },
+  {
+    "label": "Tablet",
+    "hardwareConcurrency": 6,
+    "deviceMemory": 6,
+    "maxTouchPoints": 10,
+    "connection": { "effectiveType": "4g", "downlink": 4, "rtt": 120 }
+  },
+  {
+    "label": "Mobile High End",
+    "hardwareConcurrency": 8,
+    "deviceMemory": 12,
+    "maxTouchPoints": 10,
+    "connection": { "effectiveType": "4g", "downlink": 15, "rtt": 80 }
+  },
+  {
+    "label": "Mobile Low End",
+    "hardwareConcurrency": 4,
+    "deviceMemory": 4,
+    "maxTouchPoints": 10,
+    "connection": { "effectiveType": "3g", "downlink": 1.5, "rtt": 300 }
+  }
+]

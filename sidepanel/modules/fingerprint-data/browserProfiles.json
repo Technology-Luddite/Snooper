@@ -1,0 +1,84 @@
+[
+  {
+    "label": "Modern Chrome Desktop",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "platform": "Win32",
+    "language": "en-US",
+    "vendor": "Google Inc.",
+    "productSub": "20030107",
+    "oscpu": null,
+    "pdfViewerEnabled": true,
+    "sendClientHints": true,
+    "userAgentData": {
+      "brands": [
+        { "brand": "Google Chrome", "version": "120" },
+        { "brand": "Chromium", "version": "120" },
+        { "brand": "Not_A Brand", "version": "24" }
+      ],
+      "mobile": false,
+      "platform": "Windows",
+      "platformVersion": "10.0.0",
+      "architecture": "x86",
+      "bitness": "64",
+      "uaFullVersion": "120.0.6099.109"
+    }
+  },
+  {
+    "label": "Mac Safari",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15",
+    "platform": "MacIntel",
+    "language": "en-US",
+    "vendor": "Apple Computer, Inc.",
+    "productSub": "20030107",
+    "oscpu": null,
+    "pdfViewerEnabled": true,
+    "sendClientHints": false
+  },
+  {
+    "label": "Linux Firefox",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64; rv:121.0) Gecko/20100101 Firefox/121.0",
+    "platform": "Linux x86_64",
+    "language": "en-GB",
+    "vendor": "",
+    "productSub": "20100101",
+    "oscpu": "Linux x86_64",
+    "pdfViewerEnabled": true,
+    "sendClientHints": false
+  },
+  {
+    "label": "Android Chrome",
+    "userAgent": "Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36",
+    "platform": "Linux armv8l",
+    "language": "en-US",
+    "vendor": "Google Inc.",
+    "productSub": "20030107",
+    "oscpu": null,
+    "pdfViewerEnabled": false,
+    "sendClientHints": true,
+    "userAgentData": {
+      "brands": [
+        { "brand": "Google Chrome", "version": "120" },
+        { "brand": "Chromium", "version": "120" },
+        { "brand": "Not_A Brand", "version": "24" }
+      ],
+      "mobile": true,
+      "platform": "Android",
+      "platformVersion": "13.0.0",
+      "architecture": "",
+      "bitness": "",
+      "model": "Pixel 7",
+      "uaFullVersion": "120.0.6099.109"
+    }
+  },
+  {
+    "label": "iPhone Safari",
+    "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1",
+    "platform": "iPhone",
+    "language": "en-US",
+    "vendor": "Apple Computer, Inc.",
+    "productSub": "20030107",
+    "oscpu": null,
+    "pdfViewerEnabled": false,
+    "sendClientHints": false
+  }
+]

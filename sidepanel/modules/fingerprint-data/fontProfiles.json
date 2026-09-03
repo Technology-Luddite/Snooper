@@ -1,0 +1,22 @@
+{
+  "Win32": [
+    "Arial", "Arial Black", "Calibri", "Cambria", "Cambria Math", "Comic Sans MS",
+    "Consolas", "Courier New", "Georgia", "Impact", "Lucida Console", "Lucida Sans Unicode",
+    "Microsoft Sans Serif", "Palatino Linotype", "Segoe UI", "Tahoma", "Times New Roman",
+    "Trebuchet MS", "Verdana", "Webdings", "Wingdings"
+  ],
+  "MacIntel": [
+    "Arial", "Arial Black", "Courier", "Courier New", "Geneva", "Georgia", "Helvetica",
+    "Helvetica Neue", "Lucida Grande", "Menlo", "Monaco", "Palatino", "Times",
+    "Times New Roman", "Trebuchet MS", "Verdana", "Apple Color Emoji", "SF Pro Text"
+  ],
+  "Linux x86_64": [
+    "Arial", "Courier New", "DejaVu Sans", "DejaVu Sans Mono", "DejaVu Serif",
+    "FreeMono", "FreeSans", "FreeSerif", "Liberation Mono", "Liberation Sans",
+    "Liberation Serif", "Noto Sans", "Ubuntu", "Ubuntu Mono", "Times New Roman", "Verdana"
+  ],
+  "Linux armv8l": [
+    "Arial", "DejaVu Sans", "DejaVu Sans Mono", "FreeSans", "Liberation Sans",
+    "Noto Sans", "Roboto", "Times New Roman", "Verdana"
+  ]
+}

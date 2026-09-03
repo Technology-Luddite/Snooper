@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Snooper Fingerprint</title>
+    <link rel="stylesheet" href="../styles/snooper.css">
+</head>
+
+<body>
+
+<div class="wrap">
+
+    <h1>🧬 Fingerprint Protection</h1>
+
+    <button id="enable">Enable Protection</button>
+    <button id="disable">Disable Protection</button>
+
+    <div class="card">
+        <h2>Status</h2>
+        <div id="status">Not active</div>
+    </div>
+
+    <div class="card">
+        <h2>Features</h2>
+
+        <label><input type="checkbox" id="canvas"> Canvas spoofing</label><br>
+        <label><input type="checkbox" id="webgl"> WebGL spoofing</label><br>
+        <label><input type="checkbox" id="audio"> Audio fingerprint noise</label><br>
+        <label><input type="checkbox" id="navigator"> Navigator normalization</label><br>
+        <label><input type="checkbox" id="screen"> Screen normalization</label>
+
+    </div>
+
+</div>
+
+<script src="fingerprint.js"></script>
+
+</body>
+</html>

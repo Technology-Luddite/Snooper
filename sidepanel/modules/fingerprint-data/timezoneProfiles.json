@@ -1,0 +1,22 @@
+[
+  { "label": "US Pacific", "timezone": "America/Los_Angeles", "utcOffsetMinutes": 480 },
+  { "label": "US Mountain", "timezone": "America/Denver", "utcOffsetMinutes": 420 },
+  { "label": "US Central", "timezone": "America/Chicago", "utcOffsetMinutes": 360 },
+  { "label": "US East", "timezone": "America/New_York", "utcOffsetMinutes": 300 },
+  { "label": "Brazil (São Paulo)", "timezone": "America/Sao_Paulo", "utcOffsetMinutes": 180 },
+  { "label": "UK", "timezone": "Europe/London", "utcOffsetMinutes": 0 },
+  { "label": "Western Europe", "timezone": "Europe/Paris", "utcOffsetMinutes": -60 },
+  { "label": "Central Europe", "timezone": "Europe/Berlin", "utcOffsetMinutes": -60 },
+  { "label": "Eastern Europe", "timezone": "Europe/Bucharest", "utcOffsetMinutes": -120 },
+  { "label": "South Africa", "timezone": "Africa/Johannesburg", "utcOffsetMinutes": -120 },
+  { "label": "Saudi Arabia", "timezone": "Asia/Riyadh", "utcOffsetMinutes": -180 },
+  { "label": "Moscow", "timezone": "Europe/Moscow", "utcOffsetMinutes": -180 },
+  { "label": "UAE", "timezone": "Asia/Dubai", "utcOffsetMinutes": -240 },
+  { "label": "India", "timezone": "Asia/Kolkata", "utcOffsetMinutes": -330 },
+  { "label": "Western Indonesia", "timezone": "Asia/Jakarta", "utcOffsetMinutes": -420 },
+  { "label": "China / Singapore", "timezone": "Asia/Singapore", "utcOffsetMinutes": -480 },
+  { "label": "Japan", "timezone": "Asia/Tokyo", "utcOffsetMinutes": -540 },
+  { "label": "Australia (Brisbane)", "timezone": "Australia/Brisbane", "utcOffsetMinutes": -600 },
+  { "label": "Australia (Sydney)", "timezone": "Australia/Sydney", "utcOffsetMinutes": -600 },
+  { "label": "New Zealand", "timezone": "Pacific/Auckland", "utcOffsetMinutes": -720 }
+]

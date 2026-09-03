@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Snooper Hub</title>
+    <link rel="stylesheet" href="../styles/snooper.css">
+</head>
+
+<body>
+
+<div class="wrap">
+
+    <h1>🧠 Snooper Control Hub</h1>
+
+    <div class="grid">
+
+        <div class="card">
+            <h2>Status</h2>
+            <div id="status">Loading...</div>
+        </div>
+
+        <div class="card">
+            <h2>Modules Active</h2>
+            <div id="modules"></div>
+        </div>
+
+        <div class="card">
+            <h2>Quick Actions</h2>
+
+            <button id="reload">Reload Extension State</button>
+            <button id="clearLogs">Clear Logs (UI only)</button>
+        </div>
+
+        <div class="card">
+            <h2>System Info</h2>
+            <pre id="info"></pre>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="hub.js"></script>
+
+</body>
+</html>

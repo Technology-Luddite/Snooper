@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <title>Snooper Panel</title>
+    <link rel="stylesheet" href="../styles/snooper.css">
+</head>
+
+<body>
+
+<div class="layout">
+
+    <div class="sidebar">
+        <button data-tab="hub">Admin</button>
+        <button data-tab="cookies">Cookies</button>
+        <button data-tab="fingerprint">Fingerprint</button>
+        <button data-tab="extensions">Extensions</button>
+        <button data-tab="storage">Storage</button>
+        <button data-tab="network">Network</button>
+        <button data-tab="identity">Identity</button>
+        <button data-tab="logs">Logs</button>
+        <button data-tab="settings">Settings</button>
+        <button data-tab="about">About</button>
+    </div>
+
+    <div class="content">
+        <div id="view">Loading...</div>
+    </div>
+
+</div>
+
+<script src="modules/cookies.js"></script>
+<script src="modules/storage.js"></script>
+<script src="modules/network.js"></script>
+<script src="modules/identity.js"></script>
+<script src="modules/logs.js"></script>
+<script src="modules/instrumentation.js"></script>
+<script src="../core/settings-store.js"></script>
+<script src="../core/cookie-settings-store.js"></script>
+<script src="../core/theme.js"></script>
+<script src="../core/profile-store.js"></script>
+<script src="../core/profile-builder.js"></script>
+<script src="../core/config-bundle.js"></script>
+<script src="../core/json-config-store.js"></script>
+<script src="modules/hub.js"></script>
+<script src="modules/settings.js"></script><script src="modules/about.js"></script>
+<script src="modules/fingerprint-data/profile-engine.js"></script>
+<script src="modules/tab-probe.js"></script>
+<script src="../core/extension-auditor.js"></script>
+<script src="modules/extensions.js"></script>
+<script src="modules/fingerprint.js"></script>
+<script src="panel.js"></script>
+
+</body>
+</html>
