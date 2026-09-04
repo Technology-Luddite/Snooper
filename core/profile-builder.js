@@ -41,6 +41,11 @@ const ProfileBuilder = (() => {
         return Number.isFinite(n) ? n : fallback;
     }
 
+    function isChromiumBrowser(browserP) {
+        const ua = browserP?.userAgent || "";
+        return /Chrome|Chromium|Edg\//.test(ua) && !/Firefox/i.test(ua);
+    }
+
     function resolveScreen(state, screenList, real) {
         let key = state.screen;
         if (key && LEGACY_SCREEN_LABELS[key]) key = LEGACY_SCREEN_LABELS[key];
@@ -142,7 +147,7 @@ const ProfileBuilder = (() => {
         const outerW = isMobile ? sw : innerW;
         const outerH = isMobile ? sh : sh;
 
-        const sendClientHints = !!browserP?.sendClientHints;
+        const sendClientHints = isChromiumBrowser(browserP) && browserP?.sendClientHints !== false;
         const stealth = migrated.stealthMode === true;
 
         return {

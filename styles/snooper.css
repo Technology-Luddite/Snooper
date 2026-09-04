@@ -349,6 +349,33 @@ label.checkbox-inline.is-disabled input {
 }
 label.checkbox-inline .block { display: block; margin-top: 2px; }
 
+.rotation-lang-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: var(--space-sm) 0 var(--space-sm) var(--space-lg);
+    padding-left: var(--space-sm);
+    border-left: 2px solid var(--border-subtle);
+}
+.rotation-lang-row.is-disabled {
+    opacity: 0.45;
+    pointer-events: none;
+}
+.rotation-lang-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+.select-sm {
+    max-width: 320px;
+    padding: 6px 8px;
+    font-size: 13px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-default);
+    background: var(--bg-input);
+    color: var(--text-primary);
+}
+
 .admin-actions {
     display: flex;
     gap: var(--space-sm);

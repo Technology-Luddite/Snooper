@@ -5,6 +5,7 @@
 importScripts("request-rules.js", "spoof-fn.js", "settings-store.js", "privacy-network.js", "../core/json-config-store.js", "../core/profile-builder.js", "../core/rotation-engine.js", "../core/cookie-settings-store.js", "../core/network-block-store.js", "privacy-rules.js", "network-stats.js", "cookie-manager.js");
 
 const PROFILE_KEY = "snooper_active_profile";
+const tabProfileCache = new Map();
 
 function log(...args) {
     console.log("[Snooper SW]", ...args);
@@ -36,14 +37,73 @@ async function getProfile() {
     return getStaticProfile();
 }
 
+async function getDefaultRotationLanguage() {
+    const data = await chrome.storage.local.get([
+        "snooper_fingerprint_profile",
+        PROFILE_KEY
+    ]);
+    return data?.snooper_fingerprint_profile?.language
+        || data?.[PROFILE_KEY]?.language
+        || "en-US";
+}
+
 async function resolveTabProfile(url, options = {}) {
     const enabled = await SettingsStore.isSpoofEnabled();
     if (!enabled) return null;
 
     if (await isPerSiteRotationEnabled()) {
-        return RotationEngine.getProfileForUrl(url, options);
+        const settings = await SettingsStore.get();
+        const languageMode = settings.rotationLanguageMode === "random" ? "random" : "default";
+        const defaultLanguage = await getDefaultRotationLanguage();
+        return RotationEngine.getProfileForUrl(url, {
+            ...options,
+            languageMode,
+            defaultLanguage
+        });
     }
     return getStaticProfile();
+}
+
+async function registerMainWorldBootstrap() {
+    const scriptId = "snooper-spoof-bootstrap";
+    try {
+        await chrome.scripting.unregisterContentScripts({ ids: [scriptId] });
+    } catch (e) {}
+
+    try {
+        await chrome.scripting.registerContentScripts([{
+            id: scriptId,
+            matches: ["<all_urls>"],
+            js: ["background/spoof-fn.js", "content/spoof-main-bootstrap.js"],
+            runAt: "document_start",
+            world: "MAIN",
+            allFrames: true
+        }]);
+    } catch (err) {
+        log("registerMainWorldBootstrap error:", err);
+    }
+}
+
+async function applyTabSpoof(tabId, url, frameIds, options = {}) {
+    const enabled = await SettingsStore.isSpoofEnabled();
+    if (!enabled || !tabId || !url?.startsWith("http")) return null;
+
+    const profile = await resolveTabProfile(url, options);
+    if (!profile?.userAgent) {
+        tabProfileCache.delete(tabId);
+        return null;
+    }
+
+    tabProfileCache.set(tabId, { url, profile, ts: Date.now() });
+    await injectSpoof(tabId, profile, frameIds);
+
+    const mainFrame = !Array.isArray(frameIds) || frameIds.length === 0 || frameIds[0] === 0;
+    if (mainFrame && await isPerSiteRotationEnabled()) {
+        await applyProfileRules(profile);
+        await applyWebRtcPolicy(!!profile.blockWebRTC);
+    }
+
+    return profile;
 }
 
 async function injectSpoof(tabId, profile, frameIds) {
@@ -213,6 +273,7 @@ async function boot(reason) {
     }
 
     await syncPrivacyRules();
+    await registerMainWorldBootstrap();
 
     if (typeof NetworkBlockStore !== "undefined") {
         await NetworkBlockStore.get();
@@ -304,7 +365,12 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 
     if (msg?.type === "SET_SETTINGS") {
         (async () => {
+            const prev = await SettingsStore.get();
             const next = await SettingsStore.set(msg.settings || {});
+            if (prev.rotationLanguageMode !== next.rotationLanguageMode
+                || prev.perSiteRotation !== next.perSiteRotation) {
+                RotationEngine.clearCache();
+            }
             await syncPrivacyRules();
             if (next.spoofEnabled === false) await clearSpoof();
             else await syncProfile();
@@ -338,6 +404,9 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
                 })
             }).catch(() => {});
             // #endregion
+            if (await isPerSiteRotationEnabled()) {
+                RotationEngine.clearCache();
+            }
             const result = await syncProfile(incoming || null);
             sendResponse(result);
         })();
@@ -355,6 +424,27 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
                 ? await injectSpoof(sender.tab.id, profile, [sender.frameId ?? 0])
                 : null;
             sendResponse({ ok: !!result, result });
+        })();
+        return true;
+    }
+
+    if (msg?.type === "GET_SPOOF_PROFILE") {
+        (async () => {
+            const tabId = sender?.tab?.id;
+            const url = msg.url || sender?.tab?.url || sender?.url;
+            const cached = tabId != null ? tabProfileCache.get(tabId) : null;
+            let profile = cached?.profile || null;
+
+            if (!profile && url?.startsWith("http")) {
+                profile = await resolveTabProfile(url);
+            }
+            if (!profile) profile = await getProfile();
+
+            if (profile && tabId != null) {
+                tabProfileCache.set(tabId, { url: url || cached?.url, profile, ts: Date.now() });
+            }
+
+            sendResponse({ profile: profile || null });
         })();
         return true;
     }
@@ -414,16 +504,19 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     return true;
 });
 
+chrome.webNavigation.onBeforeNavigate.addListener(async (details) => {
+    if (details.frameId !== 0) return;
+    await applyTabSpoof(details.tabId, details.url, [0], { newLoad: false });
+});
+
 chrome.webNavigation.onCommitted.addListener(async (details) => {
     if (!details.url?.startsWith("http")) return;
     const isReload = details.transitionType === "reload";
-    const profile = await resolveTabProfile(details.url, { newLoad: isReload });
-    if (!profile) return;
-    await injectSpoof(details.tabId, profile, [details.frameId]);
-    if (await isPerSiteRotationEnabled()) {
-        await applyProfileRules(profile);
-        await applyWebRtcPolicy(!!profile.blockWebRTC);
-    }
+    await applyTabSpoof(details.tabId, details.url, [details.frameId], { newLoad: isReload });
+});
+
+chrome.tabs.onRemoved.addListener((tabId) => {
+    tabProfileCache.delete(tabId);
 });
 
 chrome.webNavigation.onCompleted.addListener((details) => {

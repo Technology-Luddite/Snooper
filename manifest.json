@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Snooper",
-  "version": "3.9.3",
+  "version": "3.9.5",
   "description": "Persistent browser fingerprint spoofing toolkit",
 
   "permissions": [

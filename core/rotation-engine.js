@@ -84,12 +84,31 @@ const RotationEngine = (() => {
         return presetBundle;
     }
 
-    function entryToState(entry) {
+    function applyDefaultLanguage(profile, language) {
+        if (!profile || !language) return profile;
+        const langBase = language.split("-")[0];
+        profile.language = language;
+        profile.locale = language;
+        profile.languages = langBase && langBase !== language
+            ? [language, langBase]
+            : [language];
+        return profile;
+    }
+
+    function clearCache() {
+        builtCache.clear();
+    }
+
+    function entryToState(entry, languageMode, defaultLanguage) {
+        const lang = languageMode === "random"
+            ? entry.language
+            : (defaultLanguage || REAL_FALLBACK.language);
+
         return {
             screen: entry.screen,
             browser: entry.browser,
             platform: entry.platform || null,
-            language: entry.language,
+            language: lang,
             timezone: entry.timezone,
             geolocation: entry.geolocation,
             webgl: entry.webgl,
@@ -117,6 +136,7 @@ const RotationEngine = (() => {
         if (!domain) return null;
 
         const newLoad = options.newLoad === true;
+        const languageMode = options.languageMode === "random" ? "random" : "default";
 
         await loadPresets();
         if (!rotationList.length) return null;
@@ -127,7 +147,7 @@ const RotationEngine = (() => {
             domainGeneration.set(domain, generation);
         }
 
-        const cacheKey = `${domain}:${generation}`;
+        const cacheKey = `${domain}:${generation}:${languageMode}:${options.defaultLanguage || ""}`;
         if (builtCache.has(cacheKey)) return builtCache.get(cacheKey);
 
         const idx = hashToIndex(domain, generation);
@@ -135,7 +155,7 @@ const RotationEngine = (() => {
         if (!entry) return null;
 
         const built = ProfileBuilder.build(
-            entryToState(entry),
+            entryToState(entry, languageMode, options.defaultLanguage),
             {
                 screen: presetBundle.screen,
                 timezone: presetBundle.timezone,
@@ -149,12 +169,17 @@ const RotationEngine = (() => {
             presetBundle.fontProfiles
         );
 
+        if (languageMode === "default") {
+            applyDefaultLanguage(built, options.defaultLanguage || REAL_FALLBACK.language);
+        }
+
         built.rotationMeta = {
             domain,
             index: idx,
             generation,
             label: entry.label,
-            sessionId
+            sessionId,
+            languageMode
         };
 
         builtCache.set(cacheKey, built);
@@ -178,6 +203,7 @@ const RotationEngine = (() => {
 
     return {
         initSession,
+        clearCache,
         getRegistrableDomain,
         getProfileForDomain,
         getProfileForUrl,

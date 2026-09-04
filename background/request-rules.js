@@ -12,14 +12,40 @@ function buildSecChUaFullVersionList(brands) {
     return brands.map(b => `"${b.brand}";v="${b.version}.0.0.0"`).join(", ");
 }
 
+const CLIENT_HINT_HEADERS = [
+    "sec-ch-ua",
+    "sec-ch-ua-mobile",
+    "sec-ch-ua-platform",
+    "sec-ch-ua-platform-version",
+    "sec-ch-ua-arch",
+    "sec-ch-ua-bitness",
+    "sec-ch-ua-model",
+    "sec-ch-ua-full-version",
+    "sec-ch-ua-full-version-list"
+];
+
+function addRemoveHeaderRules(rules, nextIdRef, condition, headers) {
+    for (const header of headers) {
+        rules.push({
+            id: nextIdRef.value++,
+            priority: 2,
+            action: {
+                type: "modifyHeaders",
+                requestHeaders: [{ header, operation: "remove" }]
+            },
+            condition
+        });
+    }
+}
+
 async function applyProfileRules(profile) {
     if (!chrome.declarativeNetRequest) {
         return { ok: false, ruleCount: 0 };
     }
 
-    const removeRuleIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+    const removeRuleIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
     const rules = [];
-    let nextId = 1;
+    const nextIdRef = { value: 1 };
 
     const resourceTypes = ["main_frame", "sub_frame", "xmlhttprequest", "other"];
     const condition = { urlFilter: "*", resourceTypes };
@@ -37,7 +63,7 @@ async function applyProfileRules(profile) {
     function addHeader(header, value) {
         if (value === undefined || value === null || value === "") return;
         rules.push({
-            id: nextId++,
+            id: nextIdRef.value++,
             priority: 1,
             action: {
                 type: "modifyHeaders",
@@ -45,6 +71,12 @@ async function applyProfileRules(profile) {
             },
             condition
         });
+    }
+
+    const spoofClientHints = !!(profile?.sendClientHints && profile?.userAgentData);
+
+    if (profile?.userAgent && !spoofClientHints) {
+        addRemoveHeaderRules(rules, nextIdRef, condition, CLIENT_HINT_HEADERS);
     }
 
     if (profile?.userAgent) addHeader("User-Agent", profile.userAgent);
@@ -64,7 +96,7 @@ async function applyProfileRules(profile) {
         addHeader("DNT", "1");
     }
 
-    if (profile?.sendClientHints && profile?.userAgentData) {
+    if (spoofClientHints) {
         const uad = profile.userAgentData;
         addHeader("sec-ch-ua", buildSecChUa(uad.brands));
         addHeader("sec-ch-ua-mobile", uad.mobile ? "?1" : "?0");

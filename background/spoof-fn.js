@@ -14,6 +14,18 @@ function applySnooperProfile(p) {
         }
     }
 
+    function hideProperty(proto, instance, prop) {
+        const desc = { get: () => undefined, configurable: true };
+        try { Object.defineProperty(proto, prop, desc); } catch (e) {}
+        if (instance) {
+            try { Object.defineProperty(instance, prop, desc); } catch (e) {}
+        }
+    }
+
+    function isChromiumUA(ua) {
+        return /Chrome|Chromium|Edg\//.test(ua || "") && !/Firefox/i.test(ua || "");
+    }
+
     const locale = p.language || (Array.isArray(p.languages) ? p.languages[0] : null);
     const nav = navigator;
     const win = window;
@@ -120,8 +132,17 @@ function applySnooperProfile(p) {
             })
         };
         patch(Navigator.prototype, nav, "userAgentData", fakeUAD);
-    } else if (p.sendClientHints === false) {
-        patch(Navigator.prototype, nav, "userAgentData", undefined);
+    } else {
+        hideProperty(Navigator.prototype, nav, "userAgentData");
+    }
+
+    if (p.userAgent && !isChromiumUA(p.userAgent)) {
+        try {
+            Object.defineProperty(window, "chrome", {
+                get: () => undefined,
+                configurable: true
+            });
+        } catch (e) {}
     }
 
     /* ---- network information ---- */
@@ -289,32 +310,118 @@ function applySnooperProfile(p) {
 
     /* ---- canvas ---- */
     if (p.spoof?.canvas !== false) {
-        const noise = (ctx) => {
-            try {
-                ctx.fillStyle = "rgba(0,0,0,0.01)";
-                ctx.fillRect(0, 0, 1, 1);
-            } catch (e) {}
-        };
-        const origToDataURL = HTMLCanvasElement.prototype.toDataURL;
-        HTMLCanvasElement.prototype.toDataURL = function (...args) {
-            try { const ctx = this.getContext("2d"); if (ctx) noise(ctx); } catch (e) {}
-            return origToDataURL.apply(this, args);
-        };
-        const origToBlob = HTMLCanvasElement.prototype.toBlob;
-        if (origToBlob) {
-            HTMLCanvasElement.prototype.toBlob = function (...args) {
-                try { const ctx = this.getContext("2d"); if (ctx) noise(ctx); } catch (e) {}
-                return origToBlob.apply(this, args);
+        window.__snooperCanvasProfile = p;
+
+        if (!window.__snooperCanvasHooksInstalled) {
+        window.__snooperCanvasHooksInstalled = true;
+
+        function profileCanvasSeed() {
+            const cp = window.__snooperCanvasProfile || {};
+            const seedStr = [
+                cp.userAgent || "",
+                cp.platform || "",
+                cp.rotationMeta?.generation ?? "",
+                cp.rotationMeta?.sessionId ?? "",
+                cp.webgl?.renderer || ""
+            ].join("|");
+            let canvasSeed = 2166136261;
+            for (let i = 0; i < seedStr.length; i++) {
+                canvasSeed ^= seedStr.charCodeAt(i);
+                canvasSeed = Math.imul(canvasSeed, 16777619);
+            }
+            return canvasSeed >>> 0;
+        }
+
+        function mulberry32(a) {
+            return function () {
+                a |= 0;
+                a = (a + 0x6D2B79F5) | 0;
+                let t = Math.imul(a ^ (a >>> 15), 1 | a);
+                t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+                return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
             };
         }
+
+        function noisePixelBuffer(data) {
+            if (!data?.length) return;
+            const canvasRand = mulberry32(profileCanvasSeed());
+            const pixelCount = Math.floor(data.length / 4);
+            if (!pixelCount) return;
+            const touches = Math.min(pixelCount, Math.max(64, Math.floor(pixelCount * 0.025)));
+            for (let t = 0; t < touches; t++) {
+                const px = Math.floor(canvasRand() * pixelCount);
+                const i = px * 4;
+                const delta = (Math.floor(canvasRand() * 5) - 2) || 1;
+                data[i] = (data[i] + delta + 256) & 255;
+                data[i + 1] = (data[i + 1] + ((delta + 1) % 3) + 256) & 255;
+                data[i + 2] = (data[i + 2] + ((delta + 2) % 5) + 256) & 255;
+            }
+        }
+
+        function noiseImageData(img) {
+            try { noisePixelBuffer(img.data); } catch (e) {}
+            return img;
+        }
+
+        function noiseCanvasElement(canvas) {
+            try {
+                const w = canvas.width || 0;
+                const h = canvas.height || 0;
+                if (w < 1 || h < 1) return;
+                const ctx = canvas.getContext("2d", { willReadFrequently: true });
+                if (ctx) {
+                    const img = ctx.getImageData(0, 0, Math.min(w, 32), Math.min(h, 32));
+                    noiseImageData(img);
+                    ctx.putImageData(img, 0, 0);
+                    return;
+                }
+                const gl = canvas.getContext("webgl2") || canvas.getContext("webgl");
+                if (gl) {
+                    const pixels = new Uint8Array(Math.min(w, 32) * Math.min(h, 32) * 4);
+                    gl.readPixels(0, 0, Math.min(w, 32), Math.min(h, 32), gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+                    noisePixelBuffer(pixels);
+                }
+            } catch (e) {}
+        }
+
+        function patchCanvasExport(CanvasProto) {
+            if (!CanvasProto?.prototype) return;
+            const origToDataURL = CanvasProto.prototype.toDataURL;
+            if (origToDataURL) {
+                CanvasProto.prototype.toDataURL = function (...args) {
+                    noiseCanvasElement(this);
+                    return origToDataURL.apply(this, args);
+                };
+            }
+            const origToBlob = CanvasProto.prototype.toBlob;
+            if (origToBlob) {
+                CanvasProto.prototype.toBlob = function (...args) {
+                    noiseCanvasElement(this);
+                    return origToBlob.apply(this, args);
+                };
+            }
+        }
+
+        patchCanvasExport(HTMLCanvasElement);
+        if (typeof OffscreenCanvas !== "undefined") patchCanvasExport(OffscreenCanvas);
+
         const origGetImageData = CanvasRenderingContext2D.prototype.getImageData;
         CanvasRenderingContext2D.prototype.getImageData = function (...args) {
-            const img = origGetImageData.apply(this, args);
-            try {
-                if (img.data.length > 3) img.data[0] = (img.data[0] + 1) % 256;
-            } catch (e) {}
-            return img;
+            return noiseImageData(origGetImageData.apply(this, args));
         };
+
+        function patchGLReadPixels(proto) {
+            if (!proto?.readPixels) return;
+            const origReadPixels = proto.readPixels;
+            proto.readPixels = function (...args) {
+                origReadPixels.apply(this, args);
+                const pixels = args[6];
+                if (pixels?.length) noisePixelBuffer(pixels);
+            };
+        }
+        patchGLReadPixels(WebGLRenderingContext?.prototype);
+        patchGLReadPixels(WebGL2RenderingContext?.prototype);
+        }
     }
 
     /* ---- WebGL ---- */

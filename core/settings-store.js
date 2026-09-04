@@ -16,7 +16,8 @@ const SettingsStore = (() => {
         theme: "dark",
         stripReferrer: false,
         blockTrackers: false,
-        perSiteRotation: false
+        perSiteRotation: false,
+        rotationLanguageMode: "default"
     };
 
     async function get() {

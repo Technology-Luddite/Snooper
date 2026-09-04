@@ -176,14 +176,24 @@ function bindViewDelegation() {
     });
 
     view.addEventListener("change", (e) => {
-        if (e.target?.id === "spoofEnabled") {
-            const on = e.target.checked === true;
-            const rot = document.getElementById("perSiteRotation");
-            const rotLabel = document.getElementById("perSiteRotation-label");
-            if (rot) rot.disabled = !on;
-            if (rotLabel) rotLabel.classList.toggle("is-disabled", !on);
+        if (e.target?.id === "spoofEnabled" || e.target?.id === "perSiteRotation") {
+            updateRotationControlState();
         }
     });
+}
+
+function updateRotationControlState() {
+    const spoofOn = document.getElementById("spoofEnabled")?.checked === true;
+    const rotationOn = spoofOn && document.getElementById("perSiteRotation")?.checked === true;
+    const rot = document.getElementById("perSiteRotation");
+    const rotLabel = document.getElementById("perSiteRotation-label");
+    const langRow = document.getElementById("rotationLanguageMode-row");
+    const langSelect = document.getElementById("rotationLanguageMode");
+
+    if (rot) rot.disabled = !spoofOn;
+    if (rotLabel) rotLabel.classList.toggle("is-disabled", !spoofOn);
+    if (langRow) langRow.classList.toggle("is-disabled", !rotationOn);
+    if (langSelect) langSelect.disabled = !rotationOn;
 }
 
 const Modules = {
