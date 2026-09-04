@@ -333,13 +333,21 @@ input[type="checkbox"], input[type="radio"] { margin-right: 6px; accent-color: v
 
 label.checkbox-inline {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: var(--space-sm);
     margin: var(--space-sm) 0;
     font-size: 13px;
     color: var(--text-secondary);
     cursor: pointer;
 }
+label.checkbox-inline.is-disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+label.checkbox-inline.is-disabled input {
+    pointer-events: none;
+}
+label.checkbox-inline .block { display: block; margin-top: 2px; }
 
 .admin-actions {
     display: flex;

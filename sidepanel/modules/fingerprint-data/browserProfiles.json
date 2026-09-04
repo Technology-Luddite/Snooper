@@ -1,7 +1,7 @@
 [
   {
     "label": "Modern Chrome Desktop",
-    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
     "platform": "Win32",
     "language": "en-US",
     "vendor": "Google Inc.",
@@ -11,8 +11,8 @@
     "sendClientHints": true,
     "userAgentData": {
       "brands": [
-        { "brand": "Google Chrome", "version": "120" },
-        { "brand": "Chromium", "version": "120" },
+        { "brand": "Google Chrome", "version": "121" },
+        { "brand": "Chromium", "version": "121" },
         { "brand": "Not_A Brand", "version": "24" }
       ],
       "mobile": false,
@@ -20,7 +20,7 @@
       "platformVersion": "10.0.0",
       "architecture": "x86",
       "bitness": "64",
-      "uaFullVersion": "120.0.6099.109"
+      "uaFullVersion": "121.0.6167.85"
     }
   },
   {
@@ -47,7 +47,7 @@
   },
   {
     "label": "Android Chrome",
-    "userAgent": "Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36",
+    "userAgent": "Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Mobile Safari/537.36",
     "platform": "Linux armv8l",
     "language": "en-US",
     "vendor": "Google Inc.",
@@ -57,8 +57,8 @@
     "sendClientHints": true,
     "userAgentData": {
       "brands": [
-        { "brand": "Google Chrome", "version": "120" },
-        { "brand": "Chromium", "version": "120" },
+        { "brand": "Google Chrome", "version": "125" },
+        { "brand": "Chromium", "version": "125" },
         { "brand": "Not_A Brand", "version": "24" }
       ],
       "mobile": true,
@@ -67,7 +67,7 @@
       "architecture": "",
       "bitness": "",
       "model": "Pixel 7",
-      "uaFullVersion": "120.0.6099.109"
+      "uaFullVersion": "125.0.6422.72"
     }
   },
   {
@@ -80,5 +80,490 @@
     "oscpu": null,
     "pdfViewerEnabled": false,
     "sendClientHints": false
+  },
+  {
+    "label": "Mac Chrome",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+    "platform": "MacIntel",
+    "language": "en-US",
+    "vendor": "Google Inc.",
+    "productSub": "20030107",
+    "oscpu": null,
+    "pdfViewerEnabled": true,
+    "sendClientHints": true,
+    "userAgentData": {
+      "brands": [
+        { "brand": "Google Chrome", "version": "124" },
+        { "brand": "Chromium", "version": "124" },
+        { "brand": "Not_A Brand", "version": "24" }
+      ],
+      "mobile": false,
+      "platform": "macOS",
+      "platformVersion": "14.0.0",
+      "architecture": "x86",
+      "bitness": "64",
+      "uaFullVersion": "124.0.6367.60"
+    }
+  },
+  {
+    "label": "Mac Chrome 126",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+    "platform": "MacIntel",
+    "language": "en-US",
+    "vendor": "Google Inc.",
+    "productSub": "20030107",
+    "oscpu": null,
+    "pdfViewerEnabled": true,
+    "sendClientHints": true,
+    "userAgentData": {
+      "brands": [
+        { "brand": "Google Chrome", "version": "126" },
+        { "brand": "Chromium", "version": "126" },
+        { "brand": "Not_A Brand", "version": "24" }
+      ],
+      "mobile": false,
+      "platform": "macOS",
+      "platformVersion": "14.0.0",
+      "architecture": "arm",
+      "bitness": "64",
+      "uaFullVersion": "126.0.6478.62"
+    }
+  },
+  {
+    "label": "Linux Chrome",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+    "platform": "Linux x86_64",
+    "language": "en-US",
+    "vendor": "Google Inc.",
+    "productSub": "20030107",
+    "oscpu": null,
+    "pdfViewerEnabled": true,
+    "sendClientHints": true,
+    "userAgentData": {
+      "brands": [
+        { "brand": "Google Chrome", "version": "122" },
+        { "brand": "Chromium", "version": "122" },
+        { "brand": "Not_A Brand", "version": "24" }
+      ],
+      "mobile": false,
+      "platform": "Linux",
+      "platformVersion": "",
+      "architecture": "x86",
+      "bitness": "64",
+      "uaFullVersion": "122.0.6261.69"
+    }
+  },
+  {
+    "label": "Linux Chrome 125",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+    "platform": "Linux x86_64",
+    "language": "en-US",
+    "vendor": "Google Inc.",
+    "productSub": "20030107",
+    "oscpu": null,
+    "pdfViewerEnabled": true,
+    "sendClientHints": true,
+    "userAgentData": {
+      "brands": [
+        { "brand": "Google Chrome", "version": "125" },
+        { "brand": "Chromium", "version": "125" },
+        { "brand": "Not_A Brand", "version": "24" }
+      ],
+      "mobile": false,
+      "platform": "Linux",
+      "platformVersion": "",
+      "architecture": "x86",
+      "bitness": "64",
+      "uaFullVersion": "125.0.6422.60"
+    }
+  },
+  {
+    "label": "Edge Desktop",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36 Edg/121.0.0.0",
+    "platform": "Win32",
+    "language": "en-US",
+    "vendor": "Google Inc.",
+    "productSub": "20030107",
+    "oscpu": null,
+    "pdfViewerEnabled": true,
+    "sendClientHints": true,
+    "userAgentData": {
+      "brands": [
+        { "brand": "Microsoft Edge", "version": "121" },
+        { "brand": "Chromium", "version": "121" },
+        { "brand": "Not_A Brand", "version": "24" }
+      ],
+      "mobile": false,
+      "platform": "Windows",
+      "platformVersion": "10.0.0",
+      "architecture": "x86",
+      "bitness": "64",
+      "uaFullVersion": "121.0.2277.83"
+    }
+  },
+  {
+    "label": "Win11 Chrome",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
+    "platform": "Win32",
+    "language": "en-US",
+    "vendor": "Google Inc.",
+    "productSub": "20030107",
+    "oscpu": null,
+    "pdfViewerEnabled": true,
+    "sendClientHints": true,
+    "userAgentData": {
+      "brands": [
+        { "brand": "Google Chrome", "version": "123" },
+        { "brand": "Chromium", "version": "123" },
+        { "brand": "Not_A Brand", "version": "24" }
+      ],
+      "mobile": false,
+      "platform": "Windows",
+      "platformVersion": "15.0.0",
+      "architecture": "x86",
+      "bitness": "64",
+      "uaFullVersion": "123.0.6312.58"
+    }
+  },
+  {
+    "label": "Win11 Chrome 121",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
+    "platform": "Win32",
+    "language": "en-US",
+    "vendor": "Google Inc.",
+    "productSub": "20030107",
+    "oscpu": null,
+    "pdfViewerEnabled": true,
+    "sendClientHints": true,
+    "userAgentData": {
+      "brands": [
+        { "brand": "Google Chrome", "version": "121" },
+        { "brand": "Chromium", "version": "121" },
+        { "brand": "Not_A Brand", "version": "24" }
+      ],
+      "mobile": false,
+      "platform": "Windows",
+      "platformVersion": "15.0.0",
+      "architecture": "x86",
+      "bitness": "64",
+      "uaFullVersion": "121.0.6167.85"
+    }
+  },
+  {
+    "label": "Win11 Chrome 125",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+    "platform": "Win32",
+    "language": "en-US",
+    "vendor": "Google Inc.",
+    "productSub": "20030107",
+    "oscpu": null,
+    "pdfViewerEnabled": true,
+    "sendClientHints": true,
+    "userAgentData": {
+      "brands": [
+        { "brand": "Google Chrome", "version": "125" },
+        { "brand": "Chromium", "version": "125" },
+        { "brand": "Not_A Brand", "version": "24" }
+      ],
+      "mobile": false,
+      "platform": "Windows",
+      "platformVersion": "15.0.0",
+      "architecture": "x86",
+      "bitness": "64",
+      "uaFullVersion": "125.0.6422.60"
+    }
+  },
+  {
+    "label": "Win11 Chrome 127",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36",
+    "platform": "Win32",
+    "language": "en-US",
+    "vendor": "Google Inc.",
+    "productSub": "20030107",
+    "oscpu": null,
+    "pdfViewerEnabled": true,
+    "sendClientHints": true,
+    "userAgentData": {
+      "brands": [
+        { "brand": "Google Chrome", "version": "127" },
+        { "brand": "Chromium", "version": "127" },
+        { "brand": "Not_A Brand", "version": "24" }
+      ],
+      "mobile": false,
+      "platform": "Windows",
+      "platformVersion": "15.0.0",
+      "architecture": "x86",
+      "bitness": "64",
+      "uaFullVersion": "127.0.6533.72"
+    }
+  },
+  {
+    "label": "Win11 Chrome 23H2",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "platform": "Win32",
+    "language": "en-US",
+    "vendor": "Google Inc.",
+    "productSub": "20030107",
+    "oscpu": null,
+    "pdfViewerEnabled": true,
+    "sendClientHints": true,
+    "userAgentData": {
+      "brands": [
+        { "brand": "Google Chrome", "version": "128" },
+        { "brand": "Chromium", "version": "128" },
+        { "brand": "Not_A Brand", "version": "24" }
+      ],
+      "mobile": false,
+      "platform": "Windows",
+      "platformVersion": "19.0.0",
+      "architecture": "x86",
+      "bitness": "64",
+      "uaFullVersion": "128.0.6613.84"
+    }
+  },
+  {
+    "label": "Win11 Edge",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.0.0",
+    "platform": "Win32",
+    "language": "en-US",
+    "vendor": "Google Inc.",
+    "productSub": "20030107",
+    "oscpu": null,
+    "pdfViewerEnabled": true,
+    "sendClientHints": true,
+    "userAgentData": {
+      "brands": [
+        { "brand": "Microsoft Edge", "version": "124" },
+        { "brand": "Chromium", "version": "124" },
+        { "brand": "Not_A Brand", "version": "24" }
+      ],
+      "mobile": false,
+      "platform": "Windows",
+      "platformVersion": "15.0.0",
+      "architecture": "x86",
+      "bitness": "64",
+      "uaFullVersion": "124.0.2478.67"
+    }
+  },
+  {
+    "label": "Win11 Edge 126",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0",
+    "platform": "Win32",
+    "language": "en-US",
+    "vendor": "Google Inc.",
+    "productSub": "20030107",
+    "oscpu": null,
+    "pdfViewerEnabled": true,
+    "sendClientHints": true,
+    "userAgentData": {
+      "brands": [
+        { "brand": "Microsoft Edge", "version": "126" },
+        { "brand": "Chromium", "version": "126" },
+        { "brand": "Not_A Brand", "version": "24" }
+      ],
+      "mobile": false,
+      "platform": "Windows",
+      "platformVersion": "15.0.0",
+      "architecture": "x86",
+      "bitness": "64",
+      "uaFullVersion": "126.0.2592.68"
+    }
+  },
+  {
+    "label": "Mac Safari 17",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.6 Safari/605.1.15",
+    "platform": "MacIntel",
+    "language": "en-US",
+    "vendor": "Apple Computer, Inc.",
+    "productSub": "20030107",
+    "oscpu": null,
+    "pdfViewerEnabled": true,
+    "sendClientHints": false
+  },
+  {
+    "label": "Mac Safari 18",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Safari/605.1.15",
+    "platform": "MacIntel",
+    "language": "en-US",
+    "vendor": "Apple Computer, Inc.",
+    "productSub": "20030107",
+    "oscpu": null,
+    "pdfViewerEnabled": true,
+    "sendClientHints": false
+  },
+  {
+    "label": "Win11 Firefox 128",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0",
+    "platform": "Win32",
+    "language": "en-US",
+    "vendor": "",
+    "productSub": "20100101",
+    "oscpu": "Windows NT 10.0; Win64; x64",
+    "pdfViewerEnabled": true,
+    "sendClientHints": false
+  },
+  {
+    "label": "Win11 Firefox 125",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:125.0) Gecko/20100101 Firefox/125.0",
+    "platform": "Win32",
+    "language": "en-US",
+    "vendor": "",
+    "productSub": "20100101",
+    "oscpu": "Windows NT 10.0; Win64; x64",
+    "pdfViewerEnabled": true,
+    "sendClientHints": false
+  },
+  {
+    "label": "Win10 Firefox 128",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0",
+    "platform": "Win32",
+    "language": "en-US",
+    "vendor": "",
+    "productSub": "20100101",
+    "oscpu": "Windows NT 10.0; Win64; x64",
+    "pdfViewerEnabled": true,
+    "sendClientHints": false
+  },
+  {
+    "label": "Mac Firefox 128",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:128.0) Gecko/20100101 Firefox/128.0",
+    "platform": "MacIntel",
+    "language": "en-US",
+    "vendor": "",
+    "productSub": "20100101",
+    "oscpu": "Intel Mac OS X 10.15",
+    "pdfViewerEnabled": true,
+    "sendClientHints": false
+  },
+  {
+    "label": "Linux Firefox 128",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64; rv:128.0) Gecko/20100101 Firefox/128.0",
+    "platform": "Linux x86_64",
+    "language": "en-GB",
+    "vendor": "",
+    "productSub": "20100101",
+    "oscpu": "Linux x86_64",
+    "pdfViewerEnabled": true,
+    "sendClientHints": false
+  },
+  {
+    "label": "Win11 Brave 127",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36 Brave/127.0.0.0",
+    "platform": "Win32",
+    "language": "en-US",
+    "vendor": "Google Inc.",
+    "productSub": "20030107",
+    "oscpu": null,
+    "pdfViewerEnabled": true,
+    "sendClientHints": true,
+    "userAgentData": {
+      "brands": [
+        { "brand": "Brave", "version": "127" },
+        { "brand": "Chromium", "version": "127" },
+        { "brand": "Not_A Brand", "version": "24" }
+      ],
+      "mobile": false,
+      "platform": "Windows",
+      "platformVersion": "15.0.0",
+      "architecture": "x86",
+      "bitness": "64",
+      "uaFullVersion": "127.0.0.0"
+    }
+  },
+  {
+    "label": "Win11 Brave 125",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Brave/125.0.0.0",
+    "platform": "Win32",
+    "language": "en-US",
+    "vendor": "Google Inc.",
+    "productSub": "20030107",
+    "oscpu": null,
+    "pdfViewerEnabled": true,
+    "sendClientHints": true,
+    "userAgentData": {
+      "brands": [
+        { "brand": "Brave", "version": "125" },
+        { "brand": "Chromium", "version": "125" },
+        { "brand": "Not_A Brand", "version": "24" }
+      ],
+      "mobile": false,
+      "platform": "Windows",
+      "platformVersion": "15.0.0",
+      "architecture": "x86",
+      "bitness": "64",
+      "uaFullVersion": "125.0.0.0"
+    }
+  },
+  {
+    "label": "Win10 Brave 125",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Brave/125.0.0.0",
+    "platform": "Win32",
+    "language": "en-US",
+    "vendor": "Google Inc.",
+    "productSub": "20030107",
+    "oscpu": null,
+    "pdfViewerEnabled": true,
+    "sendClientHints": true,
+    "userAgentData": {
+      "brands": [
+        { "brand": "Brave", "version": "125" },
+        { "brand": "Chromium", "version": "125" },
+        { "brand": "Not_A Brand", "version": "24" }
+      ],
+      "mobile": false,
+      "platform": "Windows",
+      "platformVersion": "10.0.0",
+      "architecture": "x86",
+      "bitness": "64",
+      "uaFullVersion": "125.0.0.0"
+    }
+  },
+  {
+    "label": "Mac Brave 127",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36 Brave/127.0.0.0",
+    "platform": "MacIntel",
+    "language": "en-US",
+    "vendor": "Google Inc.",
+    "productSub": "20030107",
+    "oscpu": null,
+    "pdfViewerEnabled": true,
+    "sendClientHints": true,
+    "userAgentData": {
+      "brands": [
+        { "brand": "Brave", "version": "127" },
+        { "brand": "Chromium", "version": "127" },
+        { "brand": "Not_A Brand", "version": "24" }
+      ],
+      "mobile": false,
+      "platform": "macOS",
+      "platformVersion": "14.0.0",
+      "architecture": "arm",
+      "bitness": "64",
+      "uaFullVersion": "127.0.0.0"
+    }
+  },
+  {
+    "label": "Linux Brave 125",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Brave/125.0.0.0",
+    "platform": "Linux x86_64",
+    "language": "en-US",
+    "vendor": "Google Inc.",
+    "productSub": "20030107",
+    "oscpu": null,
+    "pdfViewerEnabled": true,
+    "sendClientHints": true,
+    "userAgentData": {
+      "brands": [
+        { "brand": "Brave", "version": "125" },
+        { "brand": "Chromium", "version": "125" },
+        { "brand": "Not_A Brand", "version": "24" }
+      ],
+      "mobile": false,
+      "platform": "Linux",
+      "platformVersion": "",
+      "architecture": "x86",
+      "bitness": "64",
+      "uaFullVersion": "125.0.0.0"
+    }
   }
 ]

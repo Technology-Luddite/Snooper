@@ -23,10 +23,11 @@ const JsonConfigStore = (() => {
         { id: "fontProfiles.json", title: "Font lists (by platform)", group: "Lists" },
         { id: "trackers.json", title: "Tracker blocklist", group: "Privacy" },
         { id: "limits.json", title: "Spoof limits (info)", group: "Reference" },
+        { id: "rotationProfiles.json", title: "Rotation personas (auto mode)", group: "Reference", hidden: true },
         { id: "about.json", title: "About / extension info", group: "Reference", hidden: true }
     ];
 
-    const NON_EDITABLE = new Set(["about.json"]);
+    const NON_EDITABLE = new Set(["about.json", "rotationProfiles.json"]);
 
     const SCHEMAS = {
         "screenProfiles.json": {

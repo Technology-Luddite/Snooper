@@ -13,6 +13,10 @@
 
     chrome.storage.local.get(["snooper_active_profile", "snooper_settings"], (res) => {
         if (res?.snooper_settings?.spoofEnabled === false) return;
+        if (res?.snooper_settings?.perSiteRotation === true) {
+            requestSpoof();
+            return;
+        }
         if (res?.snooper_active_profile?.userAgent) requestSpoof();
     });
 

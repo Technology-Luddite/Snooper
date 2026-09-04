@@ -2,7 +2,7 @@
  * Snooper Service Worker v3 — persistent spoof across browser restarts
  ********************************************************************/
 
-importScripts("request-rules.js", "spoof-fn.js", "settings-store.js", "privacy-network.js", "../core/json-config-store.js", "../core/cookie-settings-store.js", "../core/network-block-store.js", "privacy-rules.js", "network-stats.js", "cookie-manager.js");
+importScripts("request-rules.js", "spoof-fn.js", "settings-store.js", "privacy-network.js", "../core/json-config-store.js", "../core/profile-builder.js", "../core/rotation-engine.js", "../core/cookie-settings-store.js", "../core/network-block-store.js", "privacy-rules.js", "network-stats.js", "cookie-manager.js");
 
 const PROFILE_KEY = "snooper_active_profile";
 
@@ -19,11 +19,31 @@ async function openPanel(tabId) {
     }
 }
 
-async function getProfile() {
+async function isPerSiteRotationEnabled() {
+    const settings = await SettingsStore.get();
+    return settings.perSiteRotation === true;
+}
+
+async function getStaticProfile() {
     const enabled = await SettingsStore.isSpoofEnabled();
     if (!enabled) return null;
     const data = await chrome.storage.local.get(PROFILE_KEY);
     return data?.[PROFILE_KEY] || null;
+}
+
+async function getProfile() {
+    if (await isPerSiteRotationEnabled()) return null;
+    return getStaticProfile();
+}
+
+async function resolveTabProfile(url, options = {}) {
+    const enabled = await SettingsStore.isSpoofEnabled();
+    if (!enabled) return null;
+
+    if (await isPerSiteRotationEnabled()) {
+        return RotationEngine.getProfileForUrl(url, options);
+    }
+    return getStaticProfile();
 }
 
 async function injectSpoof(tabId, profile, frameIds) {
@@ -66,6 +86,15 @@ async function injectProfileAllTabs(profile) {
     }
 }
 
+async function injectRotationAllTabs() {
+    const tabs = await chrome.tabs.query({});
+    for (const tab of tabs) {
+        if (!tab.id || !tab.url?.startsWith("http")) continue;
+        const profile = await resolveTabProfile(tab.url);
+        if (profile?.userAgent) await injectSpoof(tab.id, profile);
+    }
+}
+
 async function clearSpoof() {
     await applyProfileRules(null);
     await applyWebRtcPolicy(false);
@@ -96,6 +125,30 @@ async function syncProfile(profile) {
         await clearSpoof();
         await syncPrivacyRules();
         return { ok: true, enabled: false };
+    }
+
+    const rotationOn = await isPerSiteRotationEnabled();
+
+    if (rotationOn) {
+        const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
+        const activeUrl = tabs[0]?.url;
+        const activeProfile = activeUrl?.startsWith("http")
+            ? await resolveTabProfile(activeUrl)
+            : null;
+
+        if (activeProfile && profileHasEffect(activeProfile)) {
+            await applyProfileRules(activeProfile);
+            await applyWebRtcPolicy(!!activeProfile.blockWebRTC);
+        } else {
+            await applyProfileRules(null);
+            await applyWebRtcPolicy(true);
+        }
+
+        await syncPrivacyRules();
+        await injectRotationAllTabs();
+        await SettingsStore.markApplied({ rotationMode: true });
+        log("Rotation mode synced:", RotationEngine.getStats());
+        return { ok: true, enabled: true, rotation: true };
     }
 
     const p = profile || (await chrome.storage.local.get(PROFILE_KEY))?.[PROFILE_KEY];
@@ -147,6 +200,7 @@ async function syncProfile(profile) {
 
 async function boot(reason) {
     log("Boot:", reason);
+    RotationEngine.initSession();
     const settings = await SettingsStore.get();
     const manifest = chrome.runtime.getManifest();
 
@@ -292,7 +346,11 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 
     if (msg?.type === "REQUEST_SPOOF" && sender?.tab?.id) {
         (async () => {
-            const profile = await getProfile();
+            let profile = null;
+            if (sender.tab?.url?.startsWith("http")) {
+                profile = await resolveTabProfile(sender.tab.url);
+            }
+            if (!profile) profile = await getProfile();
             const result = profile
                 ? await injectSpoof(sender.tab.id, profile, [sender.frameId ?? 0])
                 : null;
@@ -311,6 +369,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
                 settings,
                 hasActiveProfile: !!profileData?.[PROFILE_KEY]?.userAgent,
                 hasUiState: !!profileData?.snooper_fingerprint_profile,
+                rotation: settings.perSiteRotation === true ? RotationEngine.getStats() : null,
                 profileSummary: profileData?.[PROFILE_KEY]
                     ? {
                         userAgent: profileData[PROFILE_KEY].userAgent?.slice(0, 60),
@@ -357,9 +416,14 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 
 chrome.webNavigation.onCommitted.addListener(async (details) => {
     if (!details.url?.startsWith("http")) return;
-    const profile = await getProfile();
+    const isReload = details.transitionType === "reload";
+    const profile = await resolveTabProfile(details.url, { newLoad: isReload });
     if (!profile) return;
     await injectSpoof(details.tabId, profile, [details.frameId]);
+    if (await isPerSiteRotationEnabled()) {
+        await applyProfileRules(profile);
+        await applyWebRtcPolicy(!!profile.blockWebRTC);
+    }
 });
 
 chrome.webNavigation.onCompleted.addListener((details) => {

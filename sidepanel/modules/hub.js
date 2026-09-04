@@ -78,6 +78,14 @@ const HubModule = (() => {
                     <span><strong>Spoofing enabled</strong> (master switch)</span>
                 </label>
 
+                <label class="checkbox-inline ${on ? "" : "is-disabled"}" id="perSiteRotation-label">
+                    <input type="checkbox" id="perSiteRotation" ${s.perSiteRotation === true ? "checked" : ""} ${on ? "" : "disabled"}>
+                    <span>
+                        <strong>Per-site session rotation</strong>
+                        <span class="text-xs text-dim block">Each domain gets a unique fingerprint from a pool of personas. Refreshing picks a new one; in-site links keep the current one. Win11 client hints included.</span>
+                    </span>
+                </label>
+
                 <label class="checkbox-inline">
                     <input type="checkbox" id="autoApplyOnStartup" ${s.autoApplyOnStartup !== false ? "checked" : ""}>
                     <span>Auto-apply saved profile on browser startup</span>
@@ -94,6 +102,7 @@ const HubModule = (() => {
                 ${row("Extension version", chrome.runtime.getManifest().version)}
                 ${row("UI theme", theme === "light" ? "Light" : "Dark")}
                 ${row("Spoofing", on ? "🟢 ON" : "🔴 OFF")}
+                ${s.perSiteRotation === true && on ? row("Rotation mode", `🔄 ON — ${status?.rotation?.poolSize || 50} personas, ${status?.rotation?.assignedDomains ?? 0} domains this session`) : ""}
                 ${row("Saved profile on disk", hasProfile ? "Yes" : "No — configure Fingerprint tab and Save")}
                 ${row("Last applied", s.lastAppliedAt || "Never")}
                 ${row("Last browser preset", s.lastBrowserLabel || "—")}
@@ -143,9 +152,11 @@ const HubModule = (() => {
         }
 
         if (id === "admin-save") {
+            const spoofOn = document.getElementById("spoofEnabled")?.checked ?? true;
             const settings = {
-                spoofEnabled: document.getElementById("spoofEnabled")?.checked ?? true,
-                autoApplyOnStartup: document.getElementById("autoApplyOnStartup")?.checked ?? true
+                spoofEnabled: spoofOn,
+                autoApplyOnStartup: document.getElementById("autoApplyOnStartup")?.checked ?? true,
+                perSiteRotation: spoofOn && (document.getElementById("perSiteRotation")?.checked === true)
             };
             await new Promise((resolve) => {
                 chrome.runtime.sendMessage({ type: "SET_SETTINGS", settings }, resolve);

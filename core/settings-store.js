@@ -15,7 +15,8 @@ const SettingsStore = (() => {
         activeProfileName: null,
         theme: "dark",
         stripReferrer: false,
-        blockTrackers: false
+        blockTrackers: false,
+        perSiteRotation: false
     };
 
     async function get() {

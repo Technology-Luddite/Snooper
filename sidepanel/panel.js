@@ -174,6 +174,16 @@ function bindViewDelegation() {
             }, 300);
         }
     });
+
+    view.addEventListener("change", (e) => {
+        if (e.target?.id === "spoofEnabled") {
+            const on = e.target.checked === true;
+            const rot = document.getElementById("perSiteRotation");
+            const rotLabel = document.getElementById("perSiteRotation-label");
+            if (rot) rot.disabled = !on;
+            if (rotLabel) rotLabel.classList.toggle("is-disabled", !on);
+        }
+    });
 }
 
 const Modules = {
